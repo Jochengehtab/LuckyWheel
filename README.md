@@ -1,7 +1,7 @@
 [![Lucky-Wheel.png](https://i.postimg.cc/6Qnfy75m/Lucky-Wheel.png)](https://postimg.cc/t1Rxc463)
 # Lucky Wheel
 
-It is a __simple__ Lucky Wheel for _**Android**_ (because i hate Apple sry)
+It is a __simple__ Lucky Wheel for _**Android**_
 
 ---
 1. Get it 
