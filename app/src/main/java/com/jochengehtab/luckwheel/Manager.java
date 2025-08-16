@@ -12,20 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-/**
- * To use this class, add this to our pom.xml:
- * <p>
- * For maven:
- * <dependency>
- *      <groupId>com.googlecode.json-simple</groupId>
- *      <artifactId>json-simple</artifactId>
- *      <version>1.1.1</version>
- * </dependency>
- * <p>
- * For gradle:
- *      implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
- */
-@SuppressWarnings({"unused", "unchecked"})
+
 public class Manager {
 
     private JSONObject jsonObject;

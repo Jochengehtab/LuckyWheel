@@ -74,8 +74,8 @@ public class RegisterClassActivity extends AppCompatActivity {
 
         EditText editText = findViewById(R.id.inputadd);
         editText.setOnKeyListener((v, keyCode, event) -> {
-            if (!(editText.getText().toString().trim().length() == 0)) {
-                //TODO Das noch machen
+            if (!(editText.getText().toString().trim().isEmpty())) {
+                //TODO
                 if (isRegisteringANewClass){
 
                     if (!hasClassNameEntered){
@@ -91,7 +91,7 @@ public class RegisterClassActivity extends AppCompatActivity {
 
                     top.setText(R.string.bghene);
                     show.setText("Bitte gib die Namen der Schüler ein.");
-                    if (!(editText.getText().toString().trim().length() == 0)){
+                    if (!(editText.getText().toString().trim().isEmpty())){
                         list.append("Schüler: " + editText.getText().toString().trim()  + "\n\n");
                     }
 

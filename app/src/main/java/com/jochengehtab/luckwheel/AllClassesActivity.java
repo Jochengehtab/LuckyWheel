@@ -30,6 +30,7 @@ public class AllClassesActivity extends AppCompatActivity {
         JSONArray jsonArray = Manager.getArray(filesDir + "Classes.json", "Names");
 
 
+        assert jsonArray != null;
         listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, jsonArray));
 
 

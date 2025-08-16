@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -32,15 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
     private Button button;
     private MediaPlayer mediaPlayer;
-
-    //randomColorNumber get initialize in getRandomColor()
     private int max, min, randomColorNumber, winner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String filesDir = getApplicationContext().getFilesDir() + "/";
 
         min = 0;
 
@@ -64,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+                //TODO proper exception handeling
                 catch (Exception e){
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             }
         }
@@ -75,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         editText.setOnKeyListener((v, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                if (editText.getText().toString().trim().length() == 0) {
+                if (editText.getText().toString().trim().isEmpty()) {
                     showDefaultSubtitle("Bitte gib einen Namen ein.");
                     return false;
                 }
@@ -89,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         button.setOnClickListener(v -> {
-            if (members.size() == 0) {
+            if (members.isEmpty()) {
                 showDefaultSubtitle("Bitte gib ein paar Namen ein!");
                 return;
             }
@@ -178,40 +175,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return color;
-    }
-
-
-    /**
-     * Gets the image to random color
-     * @return The Integer of the images
-     */
-    private int getImageToRandomColor() {
-
-        int result;
-        switch (randomColorNumber) {
-            case 1:
-                result = R.drawable.yellow;
-                break;
-            case 2:
-                result = R.drawable.red;
-                break;
-            case 3:
-                result = R.drawable.green;
-                break;
-            case 4:
-                result = R.drawable.lightgreen;
-                break;
-            case 5:
-                result = R.drawable.purple;
-                break;
-            case 6:
-                result = R.drawable.light_blue;
-                break;
-            default:
-                result = R.drawable.blue;
-                break;
-        }
-        return result;
     }
 
 

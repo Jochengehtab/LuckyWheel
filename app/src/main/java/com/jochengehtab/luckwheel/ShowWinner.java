@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -16,7 +15,6 @@ import java.util.Objects;
 public class ShowWinner extends AppCompatActivity {
 
     private String name;
-    private String arrayName;
     private final Bundle sendBundle = new Bundle();
 
     @Override
@@ -32,7 +30,6 @@ public class ShowWinner extends AppCompatActivity {
             name = bundle.getString("winner");
             TextView textView = findViewById(R.id.out);
             textView.append(name + ".");
-            arrayName = bundle.getString("arrayName");
         }
 
         Button remove = findViewById(R.id.remove);
