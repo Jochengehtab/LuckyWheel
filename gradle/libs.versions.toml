@@ -1,0 +1,16 @@
+[versions]
+agp = "8.12.0"
+jsonSimple = "1.1.1"
+appcompat = "1.7.1"
+luckywheel_android = "0.3.0"
+material = "1.12.0"
+
+[libraries]
+json-simple = { module = "com.googlecode.json-simple:json-simple", version.ref = "jsonSimple" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+luckywheel_android = { module = "com.github.mmoamenn:LuckyWheel_Android", version.ref = "luckywheel_android" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+
