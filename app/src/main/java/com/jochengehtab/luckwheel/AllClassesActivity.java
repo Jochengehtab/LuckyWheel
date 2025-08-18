@@ -1,12 +1,12 @@
 package com.jochengehtab.luckwheel;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.simple.JSONArray;
 
@@ -33,7 +33,6 @@ public class AllClassesActivity extends AppCompatActivity {
         assert jsonArray != null;
         listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, jsonArray));
 
-
         listView.setOnItemClickListener((parent, view, position, id) -> {
             index = listView.getItemIdAtPosition(position);
 
@@ -59,7 +58,6 @@ public class AllClassesActivity extends AppCompatActivity {
             bundle.putStringArrayList("Names", this.jsonArray);
             bundle.putString("arrayName", arrayName);
             Intent intent = new Intent(this, MainActivity.class);
-
             intent.putExtras(bundle);
 
             startActivity(intent);

@@ -1,11 +1,11 @@
 package com.jochengehtab.luckwheel;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,8 +14,8 @@ import java.util.Objects;
 
 public class ShowWinner extends AppCompatActivity {
 
-    private String name;
     private final Bundle sendBundle = new Bundle();
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class ShowWinner extends AppCompatActivity {
 
         String filesDir = getApplicationContext().getFilesDir() + "/";
 
-        if (bundle != null){
+        if (bundle != null) {
             name = bundle.getString("winner");
             TextView textView = findViewById(R.id.out);
             textView.append(name + ".");

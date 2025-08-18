@@ -15,17 +15,18 @@ import java.util.Objects;
 
 public class Manager {
 
-    private JSONObject jsonObject;
     private final JSONArray arrayResult = new JSONArray();
+    private JSONObject jsonObject;
     private JSONObject holder = null;
 
     /**
      * Set's a value in a JSON-File
+     *
      * @param fileName The name of the File
-     * @param id The id
-     * @param object The value who gets put
+     * @param id       The id
+     * @param object   The value who gets put
      */
-    public static void set(String fileName, String id, Object object){
+    public static void set(String fileName, String id, Object object) {
         JSONObject jsonObject = getHoleFile(fileName);
         jsonObject.put(id, object);
 
@@ -39,11 +40,12 @@ public class Manager {
 
     /**
      * Set's an array in a JSON-File
-     * @param fileName  The name of the File
-     * @param id The id
+     *
+     * @param fileName     The name of the File
+     * @param id           The id
      * @param innerObjects The {@link JSONObject} that get put into an array
      */
-    public static void set(String fileName, String id, JSONObject[] innerObjects){
+    public static void set(String fileName, String id, JSONObject[] innerObjects) {
         JSONObject jsonObject = getHoleFile(fileName);
 
         ArrayList<Object> jsonArray = new JSONArray();
@@ -63,19 +65,20 @@ public class Manager {
     }
 
     /**
-     Set's an array in a JSON-File
+     * Set's an array in a JSON-File
+     *
      * @param fileName The name of the File
-     * @param id The id
-     * @param object The value who gets put
+     * @param id       The id
+     * @param object   The value who gets put
      */
-    public static void set(String fileName, String id, Object[] object){
+    public static void set(String fileName, String id, Object[] object) {
         JSONObject jsonObject = getHoleFile(fileName);
 
         ArrayList<Object> jsonArray = new JSONArray();
 
         int index = 0;
 
-        for (Object value : object){
+        for (Object value : object) {
             jsonArray.add(index, value);
         }
         jsonArray = removeDuplicates(jsonArray);
@@ -92,16 +95,17 @@ public class Manager {
 
     /**
      * Gets a value from a file
+     *
      * @param fileName The name of the File
      * @return Returns a {@link JSONObject} as result of the hole file
      */
-    public static JSONObject get(String fileName){
+    public static JSONObject get(String fileName) {
 
         Manager manager = new Manager();
 
         File file = new File(fileName);
 
-        if (!file.exists()){
+        if (!file.exists()) {
             throw new RuntimeException("The File: '" + file.getName() + "' does not exists!");
         }
 
@@ -119,23 +123,23 @@ public class Manager {
 
     /**
      * Gets an Array from a JSON - file
-     * @param fileName The Name of the file
+     *
+     * @param fileName  The Name of the file
      * @param arrayName The Name of the array
      * @return Returns a {@link JSONArray}
      */
-    public static JSONArray getArray(String fileName, String arrayName){
+    public static JSONArray getArray(String fileName, String arrayName) {
 
         Manager manager = new Manager();
         int index = -1;
 
-        try (FileReader reader = new FileReader(fileName)){
+        try (FileReader reader = new FileReader(fileName)) {
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
             JSONArray jsonArray;
-            if (!(jsonObject.get(arrayName) == null)){
+            if (!(jsonObject.get(arrayName) == null)) {
                 jsonArray = (JSONArray) jsonObject.get(arrayName);
-            }
-            else{
+            } else {
                 return null;
             }
             for (Object object : Objects.requireNonNull(jsonArray)) {
@@ -151,10 +155,11 @@ public class Manager {
 
     /**
      * Removes a value from a file
+     *
      * @param fileName The name of the file
-     * @param id The id / key for the value
+     * @param id       The id / key for the value
      */
-    public static void remove(String fileName, String id){
+    public static void remove(String fileName, String id) {
         JSONObject jsonObject = get(fileName);
         jsonObject.remove(id);
         try (FileWriter fileWriter = new FileWriter(fileName)) {
@@ -167,10 +172,11 @@ public class Manager {
 
     /**
      * Removes objects from an array
-     * @param fileName The name of the file
+     *
+     * @param fileName  The name of the file
      * @param arrayName The name of the array
      */
-    public static void removeFromArray(String fileName, String arrayName, Object object){
+    public static void removeFromArray(String fileName, String arrayName, Object object) {
         JSONArray jsonArray = getArray(fileName, arrayName);
         Objects.requireNonNull(jsonArray).remove(object);
         Manager.set(fileName, arrayName, jsonArray);
@@ -178,21 +184,22 @@ public class Manager {
 
     /**
      * Check if the file exists
+     *
      * @param fileName The Name of the File
      * @return Returns true when the file exists
      */
-    public static boolean exists(String fileName){
+    public static boolean exists(String fileName) {
         return new File(fileName).exists();
     }
 
     /**
      * Removes duplicates from a {@link ArrayList}
+     *
      * @param list The list that get check
-     * @param <T> The static Type
+     * @param <T>  The static Type
      * @return Returns a {@link ArrayList} without duplicates
      */
-    private static <T> ArrayList<T> removeDuplicates(ArrayList<T> list)
-    {
+    private static <T> ArrayList<T> removeDuplicates(ArrayList<T> list) {
         ArrayList<T> newList = new ArrayList<>();
 
         for (T element : list) {
@@ -206,10 +213,11 @@ public class Manager {
 
     /**
      * Returns the hole file
+     *
      * @param fileName The name of the file
      * @return Returns the hole File in a {@link JSONObject}
      */
-    public static JSONObject getHoleFile(String fileName){
+    public static JSONObject getHoleFile(String fileName) {
         Manager manager = new Manager();
 
         JSONParser parser = new JSONParser();

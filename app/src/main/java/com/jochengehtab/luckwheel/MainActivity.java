@@ -1,7 +1,6 @@
 package com.jochengehtab.luckwheel;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -13,9 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.documentfile.provider.DocumentFile;
+
 import com.bluehomestudio.luckywheel.LuckyWheel;
 import com.bluehomestudio.luckywheel.WheelItem;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -23,15 +27,13 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     private final String blue = "#00008B";
-
+    private final List<String> members = new ArrayList<>();
     private LuckyWheel luckyWheel;
-
     private List<WheelItem> wheelItems;
-    private final List <String> members = new ArrayList< >();
-
     private Button button;
     private MediaPlayer mediaPlayer;
     private int max, min, randomColorNumber, winner;
+    private JSON saveFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         min = 0;
+        this.saveFile = JSON.createInstance(this, "save.json");
 
         button = findViewById(R.id.btnSpin);
         Button registerNewClass = findViewById(R.id.registerClass);
@@ -49,20 +52,14 @@ public class MainActivity extends AppCompatActivity {
         defaultWheel();
         luckyWheel.addWheelItems(wheelItems);
         luckyWheel.setTarget(randomColorNumber);
-        if (bundle != null){
+        if (bundle != null) {
             ArrayList<String> namesFromLoadClasses = bundle.getStringArrayList("Names");
-            if (namesFromLoadClasses != null){
-                try {
-                    for (String name : namesFromLoadClasses){
-                        if (!name.isEmpty()){
-                            addAItem(name);
-                            members.add(name);
-                        }
+            if (namesFromLoadClasses != null) {
+                for (String name : namesFromLoadClasses) {
+                    if (!name.isEmpty()) {
+                        addAItem(name);
+                        members.add(name);
                     }
-                }
-                //TODO proper exception handeling
-                catch (Exception e){
-                    throw new RuntimeException(e);
                 }
             }
         }
@@ -122,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void defaultWheel() {
-        wheelItems = new ArrayList < > ();
+        wheelItems = new ArrayList<>();
         // Create a dummy 1x1 transparent bitmap to satisfy the constructor
         Bitmap dummyBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
         wheelItems.add(new WheelItem(Color.parseColor(blue), dummyBitmap, "Klasse laden oder Namen hinzufügen"));
@@ -141,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Gets the random color
+     *
      * @return The random color
      */
     private String getRandomColor() {
@@ -177,9 +175,9 @@ public class MainActivity extends AppCompatActivity {
         return color;
     }
 
-
     /**
      * Show a default subtitle
+     *
      * @param msg The message
      */
     private void showDefaultSubtitle(Object msg) {

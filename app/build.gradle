@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace 'com.jochengehtab.luckwheel'
-    compileSdk 36
+    compileSdk = 36
 
     defaultConfig {
         applicationId "com.jochengehtab.luckwheel"
@@ -36,6 +36,6 @@ dependencies {
         exclude group: 'junit', module: 'junit'
     }
 
-
+    implementation libs.gson
     implementation libs.luckywheel.android
 }
