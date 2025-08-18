@@ -17,6 +17,7 @@ public class ShowWinner extends AppCompatActivity {
     private final Bundle sendBundle = new Bundle();
     private String name;
 
+    private JSON saveFile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,8 @@ public class ShowWinner extends AppCompatActivity {
 
         String filesDir = getApplicationContext().getFilesDir() + "/";
 
+        saveFile = JSON.createInstance(this, "save.json");
+
         if (bundle != null) {
             name = bundle.getString("winner");
             TextView textView = findViewById(R.id.out);
@@ -34,12 +37,11 @@ public class ShowWinner extends AppCompatActivity {
 
         Button remove = findViewById(R.id.remove);
         remove.setOnClickListener(v -> {
-            JSONObject jsonObject = Manager.getHoleFile(filesDir + "Classes.json");
-            Manager.removeFromArray(filesDir + "Classes.json", Objects.requireNonNull(jsonObject.get("CurrentName")).toString(), name);
-            JSONArray jsonArray = Manager.getArray(filesDir + "Classes.json", Objects.requireNonNull(jsonObject.get("CurrentName")).toString());
-            sendBundle.putStringArrayList("Names", jsonArray);
+            saveFile.remove(name);
+
+            //sendBundle.putStringArrayList("Names", jsonArray);
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtras(sendBundle);
+            //intent.putExtras(sendBundle);
             startActivity(intent);
         });
     }

@@ -1,6 +1,5 @@
 package com.jochengehtab.luckwheel;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -13,13 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.documentfile.provider.DocumentFile;
 
 import com.bluehomestudio.luckywheel.LuckyWheel;
 import com.bluehomestudio.luckywheel.WheelItem;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -33,15 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private Button button;
     private MediaPlayer mediaPlayer;
     private int max, min, randomColorNumber, winner;
-    private JSON saveFile;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         min = 0;
-        this.saveFile = JSON.createInstance(this, "save.json");
 
         button = findViewById(R.id.btnSpin);
         Button registerNewClass = findViewById(R.id.registerClass);

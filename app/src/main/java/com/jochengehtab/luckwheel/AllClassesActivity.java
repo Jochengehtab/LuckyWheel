@@ -15,8 +15,9 @@ import java.util.Objects;
 public class AllClassesActivity extends AppCompatActivity {
 
     private long index;
-    private JSONArray jsonArray;
+    private String jsonArray;
     private String arrayName;
+    private JSON saveFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,21 +28,17 @@ public class AllClassesActivity extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.listView);
 
-        JSONArray jsonArray = Manager.getArray(filesDir + "Classes.json", "Names");
-
+        saveFile = JSON.createInstance(this, "save.json");
 
         assert jsonArray != null;
-        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, jsonArray));
+        //listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, jsonArray));
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
             index = listView.getItemIdAtPosition(position);
 
-            String name = String.valueOf(Objects.requireNonNull(jsonArray).get(Math.toIntExact(index)));
-            arrayName = name;
-            Manager.set(filesDir + "Classes.json", "CurrentName", name);
-            this.jsonArray = Manager.getArray(filesDir + "Classes.json", name);
+            //this.jsonArray = saveFile.readArray(name, String[].class);
             Bundle bundle = new Bundle();
-            bundle.putStringArrayList("Names", this.jsonArray);
+            //bundle.putStringArrayList("Names", this.jsonArray);
             bundle.putString("arrayName", arrayName);
 
             Intent intent = new Intent(this, MainActivity.class);
@@ -55,7 +52,7 @@ public class AllClassesActivity extends AppCompatActivity {
         imageButton.setOnClickListener(v -> {
 
             Bundle bundle = new Bundle();
-            bundle.putStringArrayList("Names", this.jsonArray);
+            //bundle.putStringArrayList("Names", this.jsonArray);
             bundle.putString("arrayName", arrayName);
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtras(bundle);

@@ -11,13 +11,15 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterClassActivity extends AppCompatActivity {
     private final ArrayList<String> students = new ArrayList<>();
     private boolean isRegisteringANewClass = false;
     private boolean hasClassNameEntered = false;
     private String className = null;
-    private ArrayList<String> classNames = new ArrayList<>();
+    private List<String> classNames = new ArrayList<>();
+    private JSON saveFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +27,14 @@ public class RegisterClassActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_class);
 
         String filesDir = getApplicationContext().getFilesDir() + "/";
-        Manager.set(filesDir + "Classes.json", "Path", filesDir);
 
         //Initialize the textview
         TextView list = findViewById(R.id.output),
                 top = findViewById(R.id.top),
                 show = findViewById(R.id.show);
+
+
+        saveFile = JSON.createInstance(this, "save.json");
 
 
         ImageButton back = findViewById(R.id.back);
@@ -46,9 +50,7 @@ public class RegisterClassActivity extends AppCompatActivity {
 
             isRegisteringANewClass = true;
 
-            if (!(Manager.getArray(filesDir + "Classes.json", "Names") == null)) {
-                classNames = Manager.getArray(filesDir + "Classes.json", "Names");
-            }
+            classNames = saveFile.readList("names", String.class);
 
             addClass.setVisibility(View.GONE);
             finish.setVisibility(View.VISIBLE);
@@ -56,8 +58,8 @@ public class RegisterClassActivity extends AppCompatActivity {
 
 
         finish.setOnClickListener(v -> {
-            Manager.set(filesDir + "Classes.json", className, students.toArray());
-            Manager.set(filesDir + "Classes.json", "Names", classNames.toArray());
+            saveFile.write(className, students.toArray());
+            saveFile.write("names", classNames.toArray());
 
             list.setText(null);
             show.setText(null);
@@ -78,6 +80,7 @@ public class RegisterClassActivity extends AppCompatActivity {
                 if (isRegisteringANewClass) {
 
                     if (!hasClassNameEntered) {
+                        // TODO
                         show.setText("Bitte gib den Namen der Klasse ein:");
                         className = editText.getText().toString().trim();
                         hasClassNameEntered = true;
@@ -89,6 +92,7 @@ public class RegisterClassActivity extends AppCompatActivity {
                     students.add(editText.getText().toString().trim());
 
                     top.setText(R.string.bghene);
+                    // TODO
                     show.setText("Bitte gib die Namen der Schüler ein.");
                     if (!(editText.getText().toString().trim().isEmpty())) {
                         list.append("Schüler: " + editText.getText().toString().trim() + "\n\n");
