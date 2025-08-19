@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".RegisterClassActivity">
+    tools:context=".activity.RegisterGroup">
 
     <ImageButton
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Back to main menu"
+        android:contentDescription="@string/back_to_main_menu"
         android:src="@drawable/ic_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/das_sind_die_eigegebenen_namen"
+        android:text="@string/entered_names"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:background="#F1F1F1"
-            tools:text="Student: John Doe\n\nStudent: Jane Smith\n\n" />
+            tools:text="\n\n" />
     </ScrollView>
 
     <EditText

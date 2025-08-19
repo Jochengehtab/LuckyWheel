@@ -1,18 +1,16 @@
-package com.jochengehtab.luckwheel;
+package com.jochengehtab.luckwheel.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.simple.JSONArray;
+import com.jochengehtab.luckwheel.JSON;
+import com.jochengehtab.luckwheel.R;
 
-import java.util.Objects;
-
-public class AllClassesActivity extends AppCompatActivity {
+public class Overview extends AppCompatActivity {
 
     private long index;
     private String jsonArray;
@@ -41,7 +39,7 @@ public class AllClassesActivity extends AppCompatActivity {
             //bundle.putStringArrayList("Names", this.jsonArray);
             bundle.putString("arrayName", arrayName);
 
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, Main.class);
 
             intent.putExtras(bundle);
 
@@ -54,7 +52,7 @@ public class AllClassesActivity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             //bundle.putStringArrayList("Names", this.jsonArray);
             bundle.putString("arrayName", arrayName);
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, Main.class);
             intent.putExtras(bundle);
 
             startActivity(intent);

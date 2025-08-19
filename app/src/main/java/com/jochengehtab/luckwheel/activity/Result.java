@@ -1,4 +1,4 @@
-package com.jochengehtab.luckwheel;
+package com.jochengehtab.luckwheel.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,12 +7,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.jochengehtab.luckwheel.JSON;
+import com.jochengehtab.luckwheel.R;
 
-import java.util.Objects;
-
-public class ShowWinner extends AppCompatActivity {
+public class Result extends AppCompatActivity {
 
     private final Bundle sendBundle = new Bundle();
     private String name;
@@ -40,7 +38,7 @@ public class ShowWinner extends AppCompatActivity {
             saveFile.remove(name);
 
             //sendBundle.putStringArrayList("Names", jsonArray);
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, Main.class);
             //intent.putExtras(sendBundle);
             startActivity(intent);
         });

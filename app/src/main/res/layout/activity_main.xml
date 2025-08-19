@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.Main">
 
     <com.bluehomestudio.luckywheel.LuckyWheel
         android:id="@+id/lwv"
@@ -23,7 +23,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="24dp"
-        android:hint="Enter a name"
+        android:hint="@string/enter_a_name"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/btnSpin"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
-        android:text="Spin the Wheel"
+        android:text="@string/spin_the_wheel"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -54,20 +54,20 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/registerClass"
+            android:id="@+id/registerGroup"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:text="Register Class" />
+            android:text="@string/register_group" />
 
         <Button
-            android:id="@+id/load"
+            android:id="@+id/load_group"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="1"
-            android:text="Load Class" />
+            android:text="@string/load_group" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

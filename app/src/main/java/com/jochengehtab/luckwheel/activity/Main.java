@@ -1,4 +1,4 @@
-package com.jochengehtab.luckwheel;
+package com.jochengehtab.luckwheel.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,12 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bluehomestudio.luckywheel.LuckyWheel;
 import com.bluehomestudio.luckywheel.WheelItem;
+import com.jochengehtab.luckwheel.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class Main extends AppCompatActivity {
 
     private final String blue = "#00008B";
     private final List<String> members = new ArrayList<>();
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         min = 0;
 
         button = findViewById(R.id.btnSpin);
-        Button registerNewClass = findViewById(R.id.registerClass);
+        Button registerNewClass = findViewById(R.id.registerGroup);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             winner = random.nextInt(max) + min;
 
             //Show Subtitle
-            showDefaultSubtitle("Ausloshung...");
+            showDefaultSubtitle("Draw is underway...");
             mediaPlayer = MediaPlayer.create(this, R.raw.openchest);
             mediaPlayer.start();
             mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
@@ -95,18 +96,18 @@ public class MainActivity extends AppCompatActivity {
             luckyWheel.rotateWheelTo(winner);
             button.setEnabled(true);
             luckyWheel.setLuckyWheelReachTheTarget(() -> {
-                showDefaultSubtitle("Der Glückliche ist: " + wheelItems.get((winner - 1 == -1) ? winner : winner - 1).text + ".");
+                showDefaultSubtitle("The lucky one is: " + wheelItems.get((winner - 1 == -1) ? winner : winner - 1).text + ".");
                 Bundle input = new Bundle();
                 input.putString("winner", wheelItems.get((winner - 1 == -1) ? winner : winner - 1).text);
                 input.putString("arrayName", (bundle != null) ? bundle.getString("arrayName") : null);
-                startActivity(new Intent(this, ShowWinner.class).putExtras(input));
+                startActivity(new Intent(this, Result.class).putExtras(input));
             });
         });
 
-        registerNewClass.setOnClickListener(v -> startActivity(new Intent(this, RegisterClassActivity.class)));
+        registerNewClass.setOnClickListener(v -> startActivity(new Intent(this, RegisterGroup.class)));
 
-        Button load = findViewById(R.id.load);
-        load.setOnClickListener(v -> startActivity(new Intent(this, AllClassesActivity.class)));
+        Button load = findViewById(R.id.load_group);
+        load.setOnClickListener(v -> startActivity(new Intent(this, Overview.class)));
 
     }
 
@@ -115,12 +116,12 @@ public class MainActivity extends AppCompatActivity {
         wheelItems = new ArrayList<>();
         // Create a dummy 1x1 transparent bitmap to satisfy the constructor
         Bitmap dummyBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
-        wheelItems.add(new WheelItem(Color.parseColor(blue), dummyBitmap, "Klasse laden oder Namen hinzufügen"));
+        wheelItems.add(new WheelItem(Color.parseColor(blue), dummyBitmap, ""));
     }
 
 
     private void addAItem(String name) {
-        if (wheelItems.get(0).text.equalsIgnoreCase("Klasse laden oder Namen hinzufügen")) {
+        if (wheelItems.get(0).text.isBlank()) {
             wheelItems.remove(0);
         }
         // Create a dummy 1x1 transparent bitmap to satisfy the constructor

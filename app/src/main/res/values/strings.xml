@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Luck Wheel</string>
     <string name="shown">Adding a new class</string>
-    <string name="das_sind_die_eigegebenen_namen">These are the entered names:</string>
-    <string name="bghene">Add Students</string>
+    <string name="entered_names">These are the entered names:</string>
+    <string name="add_student">Add Students</string>
+    <string name="back_to_main_menu">Back to main menu</string>
+    <string name="enter_a_name">Enter a name</string>
+    <string name="spin_the_wheel">Spin the Wheel</string>
+    <string name="register_group">Register Group</string>
+    <string name="load_group">Load Group</string>
 </resources>

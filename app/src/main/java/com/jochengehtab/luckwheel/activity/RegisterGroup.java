@@ -1,4 +1,4 @@
-package com.jochengehtab.luckwheel;
+package com.jochengehtab.luckwheel.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +10,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.jochengehtab.luckwheel.JSON;
+import com.jochengehtab.luckwheel.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegisterClassActivity extends AppCompatActivity {
+public class RegisterGroup extends AppCompatActivity {
     private final ArrayList<String> students = new ArrayList<>();
-    private boolean isRegisteringANewClass = false;
+    private boolean isRegisteringGroup = false;
     private boolean hasClassNameEntered = false;
     private String className = null;
     private List<String> classNames = new ArrayList<>();
@@ -25,8 +28,6 @@ public class RegisterClassActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_class);
-
-        String filesDir = getApplicationContext().getFilesDir() + "/";
 
         //Initialize the textview
         TextView list = findViewById(R.id.output),
@@ -38,7 +39,7 @@ public class RegisterClassActivity extends AppCompatActivity {
 
 
         ImageButton back = findViewById(R.id.back);
-        back.setOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
+        back.setOnClickListener(v -> startActivity(new Intent(this, Main.class)));
 
         Button addClass = findViewById(R.id.addClasses);
         Button finish = findViewById(R.id.finsih);
@@ -48,7 +49,7 @@ public class RegisterClassActivity extends AppCompatActivity {
             show.setText(null);
             top.setText(R.string.shown);
 
-            isRegisteringANewClass = true;
+            isRegisteringGroup = true;
 
             classNames = saveFile.readList("names", String.class);
 
@@ -63,8 +64,8 @@ public class RegisterClassActivity extends AppCompatActivity {
 
             list.setText(null);
             show.setText(null);
-            top.setText(R.string.das_sind_die_eigegebenen_namen);
-            isRegisteringANewClass = false;
+            top.setText(R.string.entered_names);
+            isRegisteringGroup = false;
             addClass.setVisibility(View.VISIBLE);
             finish.setVisibility(View.GONE);
             hasClassNameEntered = false;
@@ -76,8 +77,7 @@ public class RegisterClassActivity extends AppCompatActivity {
         EditText editText = findViewById(R.id.inputadd);
         editText.setOnKeyListener((v, keyCode, event) -> {
             if (!(editText.getText().toString().trim().isEmpty())) {
-                //TODO
-                if (isRegisteringANewClass) {
+                if (isRegisteringGroup) {
 
                     if (!hasClassNameEntered) {
                         // TODO
@@ -91,7 +91,7 @@ public class RegisterClassActivity extends AppCompatActivity {
 
                     students.add(editText.getText().toString().trim());
 
-                    top.setText(R.string.bghene);
+                    top.setText(R.string.add_student);
                     // TODO
                     show.setText("Bitte gib die Namen der Schüler ein.");
                     if (!(editText.getText().toString().trim().isEmpty())) {
