@@ -20,7 +20,7 @@ public class Overview extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_classes);
+        setContentView(R.layout.activity_overview);
 
         String filesDir = getApplicationContext().getFilesDir() + "/";
 

@@ -19,7 +19,7 @@ public class Result extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_winner);
+        setContentView(R.layout.activity_result);
 
         Bundle bundle = getIntent().getExtras();
 

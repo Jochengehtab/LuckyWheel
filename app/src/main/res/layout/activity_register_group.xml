@@ -47,7 +47,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/inputadd"
+        app:layout_constraintBottom_toTopOf="@+id/input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/show">
@@ -62,27 +62,26 @@
     </ScrollView>
 
     <EditText
-        android:id="@+id/inputadd"
+        android:id="@+id/input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:hint="Enter class or student name"
+        android:hint="@string/enter_group_name"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/addClasses"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/submit" />
 
     <Button
-        android:id="@+id/addClasses"
-        android:layout_width="0dp"
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add New Class"
+        android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/input" />
 
     <Button
-        android:id="@+id/finsih"
+        android:id="@+id/finish"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Finish"

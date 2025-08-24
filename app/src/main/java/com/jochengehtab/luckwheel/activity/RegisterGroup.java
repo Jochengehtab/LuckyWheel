@@ -27,7 +27,10 @@ public class RegisterGroup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_class);
+        setContentView(R.layout.activity_register_group);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
 
         //Initialize the textview
         TextView list = findViewById(R.id.output),
@@ -41,8 +44,8 @@ public class RegisterGroup extends AppCompatActivity {
         ImageButton back = findViewById(R.id.back);
         back.setOnClickListener(v -> startActivity(new Intent(this, Main.class)));
 
-        Button addClass = findViewById(R.id.addClasses);
-        Button finish = findViewById(R.id.finsih);
+        Button addClass = findViewById(R.id.submit);
+        Button finish = findViewById(R.id.finish);
         addClass.setOnClickListener(v -> {
 
             list.setText(null);
@@ -74,7 +77,7 @@ public class RegisterGroup extends AppCompatActivity {
         });
 
 
-        EditText editText = findViewById(R.id.inputadd);
+        EditText editText = findViewById(R.id.input);
         editText.setOnKeyListener((v, keyCode, event) -> {
             if (!(editText.getText().toString().trim().isEmpty())) {
                 if (isRegisteringGroup) {
