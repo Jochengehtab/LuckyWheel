@@ -4,14 +4,12 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.jochengehtab.luckwheel.JSON;
 import com.jochengehtab.luckwheel.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class RegisterPeople extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_students);
+        setContentView(R.layout.activity_register_people);
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
@@ -38,6 +36,7 @@ public class RegisterPeople extends AppCompatActivity {
         ListView studentListView = findViewById(R.id.studentListView);
         studentInput = findViewById(R.id.studentInput);
         Button addStudentButton = findViewById(R.id.addStudentButton);
+        ImageButton backButton = findViewById(R.id.backButton); // Initialize the back button
 
         groupNameTitle.setText(groupName);
 
@@ -60,6 +59,12 @@ public class RegisterPeople extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 studentInput.setText("");
             }
+        });
+
+        // Set the OnClickListener for the back button
+        backButton.setOnClickListener(v -> {
+            // Finish the current activity and go back to the previous one
+            finish();
         });
     }
 }
