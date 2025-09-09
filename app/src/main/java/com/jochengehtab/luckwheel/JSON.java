@@ -4,12 +4,14 @@ package com.jochengehtab.luckwheel;
 import android.content.Context;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
+import android.util.Log;
 
 import androidx.documentfile.provider.DocumentFile;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
@@ -85,15 +87,24 @@ public class JSON {
             return new LinkedHashMap<>();
         }
 
+        Log.i("Path", String.valueOf(configFile.getUri()));
+
         try (Reader reader = new InputStreamReader(
                 context.getContentResolver().openInputStream(configFile.getUri()), StandardCharsets.UTF_8)) {
 
-            Type type = new TypeToken<LinkedHashMap<String, JsonElement>>() {
-            }.getType();
-            Map<String, JsonElement> map = gson.fromJson(reader, type);
-            return (map != null) ? map : new LinkedHashMap<>();
+            JsonElement rootElement = JsonParser.parseReader(reader);
+
+            // If the file is not valid return an empty list
+            if (rootElement == null || rootElement.isJsonNull() || !rootElement.isJsonObject()) {
+                return new LinkedHashMap<>();
+            }
+
+            // Convert it to the map type
+            Type type = new TypeToken<LinkedHashMap<String, JsonElement>>() {}.getType();
+            return gson.fromJson(rootElement, type);
         }
     }
+
 
     /**
      * Writes a key-value pair to the JSON file, preserving other content.

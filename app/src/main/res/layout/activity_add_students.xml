@@ -5,56 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".activity.RegisterGroup">
-
-    <ImageButton
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/back_to_main_menu"
-        android:src="@drawable/ic_arrow_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".activity.RegisterPeople">
 
     <TextView
-        android:id="@+id/top"
+        android:id="@+id/groupNameTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/groups"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/back" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Group Name" />
 
     <ListView
-        android:id="@+id/groupListView"
+        android:id="@+id/studentListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/input"
+        app:layout_constraintBottom_toTopOf="@+id/studentInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top" />
+        app:layout_constraintTop_toBottomOf="@id/groupNameTitle" />
 
     <EditText
-        android:id="@+id/input"
+        android:id="@+id/studentInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/enter_group_name"
+        android:hint="@string/enter_student_name"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/submit"
+        app:layout_constraintEnd_toStartOf="@+id/addStudentButton"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/addStudentButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/submit"
+        android:text="@string/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

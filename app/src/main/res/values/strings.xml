@@ -10,4 +10,7 @@
     <string name="load_group">Load Group</string>
     <string name="submit">Submit</string>
     <string name="enter_group_name">Enter group name</string>
+    <string name="groups">Groups\n</string>
+    <string name="add">Add\n</string>
+    <string name="enter_student_name">Enter Student Name\n</string>
 </resources>
