@@ -28,9 +28,6 @@ public class RegisterGroup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_group);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
 
         saveFile = JSON.createInstance(this, "save.json");
         editText = findViewById(R.id.input);

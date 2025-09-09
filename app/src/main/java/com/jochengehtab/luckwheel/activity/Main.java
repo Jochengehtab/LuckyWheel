@@ -107,7 +107,7 @@ public class Main extends AppCompatActivity {
         registerNewClass.setOnClickListener(v -> startActivity(new Intent(this, RegisterGroup.class)));
 
         Button load = findViewById(R.id.load_group);
-        load.setOnClickListener(v -> startActivity(new Intent(this, Overview.class)));
+        load.setOnClickListener(v -> startActivity(new Intent(this, LoadGroup.class)));
 
     }
 

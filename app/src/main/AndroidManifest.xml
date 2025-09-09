@@ -24,7 +24,7 @@
 
         <activity android:name=".activity.Result" />
         <activity android:name=".activity.RegisterGroup" />
-        <activity android:name=".activity.Overview" />
+        <activity android:name=".activity.LoadGroup" />
         <activity android:name=".activity.RegisterPeople" />
 
     </application>

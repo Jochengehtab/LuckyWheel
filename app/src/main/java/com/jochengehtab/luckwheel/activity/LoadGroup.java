@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.jochengehtab.luckwheel.JSON;
 import com.jochengehtab.luckwheel.R;
 
-public class Overview extends AppCompatActivity {
+public class LoadGroup extends AppCompatActivity {
 
     private long index;
     private String jsonArray;
@@ -20,7 +20,7 @@ public class Overview extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_overview);
+        setContentView(R.layout.activity_load_group);
 
         String filesDir = getApplicationContext().getFilesDir() + "/";
 
@@ -28,7 +28,6 @@ public class Overview extends AppCompatActivity {
 
         saveFile = JSON.createInstance(this, "save.json");
 
-        assert jsonArray != null;
         //listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, jsonArray));
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
