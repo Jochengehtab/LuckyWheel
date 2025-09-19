@@ -2,6 +2,8 @@ package com.jochengehtab.luckwheel.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -10,50 +12,37 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.jochengehtab.luckwheel.JSON;
 import com.jochengehtab.luckwheel.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LoadGroup extends AppCompatActivity {
 
-    private long index;
-    private String jsonArray;
-    private String arrayName;
-    private JSON saveFile;
+    private List<String> classNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_group);
 
-        String filesDir = getApplicationContext().getFilesDir() + "/";
-
+        ImageButton backButton = findViewById(R.id.back);
         ListView listView = findViewById(R.id.listView);
+        JSON saveFile = JSON.createInstance(this, "save.json");
 
-        saveFile = JSON.createInstance(this, "save.json");
+        classNames = saveFile.readList("names", String.class);
+        if (classNames == null) {
+            classNames = new ArrayList<>();
+        }
 
-        //listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, jsonArray));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, classNames);
+        listView.setAdapter(adapter);
+
+        backButton.setOnClickListener(v -> startActivity(new Intent(this, Main.class)));
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            index = listView.getItemIdAtPosition(position);
-
-            //this.jsonArray = saveFile.readArray(name, String[].class);
-            Bundle bundle = new Bundle();
-            //bundle.putStringArrayList("Names", this.jsonArray);
-            bundle.putString("arrayName", arrayName);
-
-            Intent intent = new Intent(this, Main.class);
-
-            intent.putExtras(bundle);
-
-            startActivity(intent);
-        });
-
-        ImageButton imageButton = findViewById(R.id.back);
-        imageButton.setOnClickListener(v -> {
-
-            Bundle bundle = new Bundle();
-            //bundle.putStringArrayList("Names", this.jsonArray);
-            bundle.putString("arrayName", arrayName);
-            Intent intent = new Intent(this, Main.class);
-            intent.putExtras(bundle);
-
+            String selectedGroup = classNames.get(position);
+            Intent intent = new Intent(LoadGroup.this, Main.class);
+            intent.putExtra("GROUP_NAME", selectedGroup);
+            Log.i("Group", selectedGroup);
             startActivity(intent);
         });
     }

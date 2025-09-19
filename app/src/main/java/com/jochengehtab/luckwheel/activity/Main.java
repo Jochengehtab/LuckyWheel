@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bluehomestudio.luckywheel.LuckyWheel;
 import com.bluehomestudio.luckywheel.WheelItem;
+import com.jochengehtab.luckwheel.JSON;
 import com.jochengehtab.luckwheel.R;
 
 import java.util.ArrayList;
@@ -29,48 +31,56 @@ public class Main extends AppCompatActivity {
     private List<WheelItem> wheelItems;
     private Button button;
     private MediaPlayer mediaPlayer;
-    private int max, min, randomColorNumber, winner;
+    private int max;
+    private int winner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        min = 0;
-
         button = findViewById(R.id.btnSpin);
         Button registerNewClass = findViewById(R.id.registerGroup);
+        luckyWheel = findViewById(R.id.lwv);
+        JSON saveFile = JSON.createInstance(this, "save.json");
+
+        defaultWheel();
 
         Bundle bundle = getIntent().getExtras();
-
-        luckyWheel = findViewById(R.id.lwv);
-        defaultWheel();
-        luckyWheel.addWheelItems(wheelItems);
-        luckyWheel.setTarget(randomColorNumber);
         if (bundle != null) {
-            ArrayList<String> namesFromLoadClasses = bundle.getStringArrayList("Names");
-            if (namesFromLoadClasses != null) {
-                for (String name : namesFromLoadClasses) {
-                    if (!name.isEmpty()) {
-                        addAItem(name);
-                        members.add(name);
+            String groupName = bundle.getString("GROUP_NAME");
+            if (groupName != null) {
+                List<String> groupMembers = saveFile.readList(groupName, String.class);
+                if (groupMembers != null) {
+                    for (String name : groupMembers) {
+                        if (name != null && !name.trim().isEmpty()) {
+                            Log.i("Name", name);
+                            addAItem(name);
+                            members.add(name);
+                        }
                     }
                 }
+            } else {
+                Toast.makeText(this, "Group is empty!", Toast.LENGTH_SHORT).show();
             }
         }
-        Random random = new Random();
 
+        luckyWheel.addWheelItems(wheelItems);
+
+        Random random = new Random();
         EditText editText = findViewById(R.id.input);
 
         editText.setOnKeyListener((v, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                if (editText.getText().toString().trim().isEmpty()) {
-                    showDefaultSubtitle("Bitte gib einen Namen ein.");
+                String inputText = editText.getText().toString().trim();
+                if (inputText.isEmpty()) {
+                    showDefaultSubtitle("Please enter some names.");
                     return false;
                 }
-                luckyWheel.addWheelItems(wheelItems);
-                members.add(editText.getText().toString());
-                addAItem(editText.getText().toString());
-                showDefaultSubtitle(editText.getText().toString() + " wurde hinzugefügt.");
+                // When adding a new item, you must update the wheel again
+                addAItem(inputText);
+                members.add(inputText);
+                luckyWheel.addWheelItems(wheelItems); // Refresh the wheel with the new item
+                showDefaultSubtitle(inputText + " was added.");
                 editText.setText(null);
             }
             return true;
@@ -78,29 +88,33 @@ public class Main extends AppCompatActivity {
 
         button.setOnClickListener(v -> {
             if (members.isEmpty()) {
-                showDefaultSubtitle("Bitte gib ein paar Namen ein!");
+                showDefaultSubtitle("Please enter some names!");
                 return;
             }
 
             max = members.size();
-
             button.setEnabled(false);
-            winner = random.nextInt(max) + min;
+            winner = random.nextInt(max); // Generates a 0-based index
 
-            //Show Subtitle
             showDefaultSubtitle("Draw is underway...");
             mediaPlayer = MediaPlayer.create(this, R.raw.openchest);
             mediaPlayer.start();
             mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
-            luckyWheel.setTarget(winner);
-            luckyWheel.rotateWheelTo(winner);
-            button.setEnabled(true);
+
+            // The target index must be between 1 and list.size() for this library
+            luckyWheel.rotateWheelTo(winner + 1);
+
             luckyWheel.setLuckyWheelReachTheTarget(() -> {
-                showDefaultSubtitle("The lucky one is: " + wheelItems.get((winner - 1 == -1) ? winner : winner - 1).text + ".");
+                // FIX: Correctly get the winner using the 0-based index
+                String winnerName = wheelItems.get(winner).text;
+                showDefaultSubtitle("The lucky one is: " + winnerName + ".");
+
                 Bundle input = new Bundle();
-                input.putString("winner", wheelItems.get((winner - 1 == -1) ? winner : winner - 1).text);
-                input.putString("arrayName", (bundle != null) ? bundle.getString("arrayName") : null);
+                input.putString("winner", winnerName);
+                input.putString("arrayName", (bundle != null) ? bundle.getString("GROUP_NAME") : null);
                 startActivity(new Intent(this, Result.class).putExtras(input));
+
+                button.setEnabled(true);
             });
         });
 
@@ -114,14 +128,13 @@ public class Main extends AppCompatActivity {
 
     private void defaultWheel() {
         wheelItems = new ArrayList<>();
-        // Create a dummy 1x1 transparent bitmap to satisfy the constructor
         Bitmap dummyBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
         wheelItems.add(new WheelItem(Color.parseColor(blue), dummyBitmap, ""));
     }
 
 
     private void addAItem(String name) {
-        if (wheelItems.get(0).text.isBlank()) {
+        if (!wheelItems.isEmpty() && wheelItems.get(0).text.isEmpty()) {
             wheelItems.remove(0);
         }
         // Create a dummy 1x1 transparent bitmap to satisfy the constructor
@@ -139,7 +152,7 @@ public class Main extends AppCompatActivity {
 
         Random random = new Random();
         int minRange = 0, maxRange = 6;
-        randomColorNumber = random.nextInt(maxRange + 1 - minRange) + minRange;
+        int randomColorNumber = random.nextInt(maxRange + 1 - minRange) + minRange;
 
         String color, yellow = "#ffff00", red = "#FF0000", green = "#008000", purple = "#9400D3", lightGreen = "#32CD32", lightBlue = "#20c4fc";
 
